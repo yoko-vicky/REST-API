@@ -1,13 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe Article, type: :model do
-  it 'tests a number to be positive' do
-    expect(1).to be_positive
-    expect(5).to be > 3
-  end
+  describe '#validaitions' do
+    #  The difference between build and create is that create also saves the created object
+    # as build only returns the newly created object (without it being saved yet)
+    let(:article) { build(:article) }
 
-  it 'tests article objects' do
-    article = create(:article)
-    expect(article.title).to eq('My new article')
+    it 'tests article objects' do
+      expect(article).to be_valid
+    end
+
+    it 'has an invalid title' do
+      article.title = ''
+      expect(article).not_to be_valid
+      expect(article.errors[:title]).to include("can't be blank")
+    end
   end
 end

@@ -5,4 +5,9 @@ RSpec.describe Article, type: :model do
     expect(1).to be_positive
     expect(5).to be > 3
   end
+
+  it 'tests article objects' do
+    article = create(:article)
+    expect(article.title).to eq('My new article')
+  end
 end

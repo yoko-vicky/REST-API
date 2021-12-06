@@ -80,6 +80,8 @@ GEM
     i18n (1.8.11)
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.5.4)
+    jsonapi-serializer (2.2.0)
+      activesupport (>= 4.2)
     listen (3.7.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -188,6 +190,7 @@ DEPENDENCIES
   bootsnap (>= 1.4.4)
   byebug
   factory_bot_rails
+  jsonapi-serializer
   listen (~> 3.3)
   pg (~> 1.1)
   puma (~> 5.0)

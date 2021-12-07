@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
   def index
-    articles = Article.all
+    articles = Article.latest_order
     render json: serializer.new(articles), status: :ok
   end
 

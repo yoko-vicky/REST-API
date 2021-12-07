@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :article do
-    title { 'My new article' }
-    content { 'This is my new article. Yeah!' }
-    slug { 'my-new-article' }
+    title { Faker::Lorem.characters(number: 6).capitalize }
+    content { Faker::Lorem.paragraph(sentence_count: 2) }
+    slug { Faker::Lorem.characters(number: 8) }
   end
 end

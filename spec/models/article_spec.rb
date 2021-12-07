@@ -30,9 +30,24 @@ RSpec.describe Article, type: :model do
 
     it 'has not a unique slug' do
       article.save
-      article2 = build(:article)
+      article2 = build(:article, slug: article.slug)
       expect { article2.save! }
         .to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Slug has already been taken')
+    end
+  end
+
+  describe 'scopes' do
+    it 'returns articles in the correct order' do
+      older_article = create(:article, created_at: 1.hour.ago)
+      recent_article = create(:article)
+
+      articles = Article.latest_order
+      expect(articles).to eq([recent_article, older_article])
+
+      recent_article.update_column(:created_at, 2.hours.ago)
+
+      articles = Article.latest_order
+      expect(articles).to eq([older_article, recent_article])
     end
   end
 end

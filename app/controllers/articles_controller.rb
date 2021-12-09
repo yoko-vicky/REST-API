@@ -7,8 +7,8 @@ class ArticlesController < ApplicationController
   end
 
   def show
-    id = params[:id]
-    render json: { id: id }
+    article = Article.find(params[:id])
+    render json: serializer.new(article)
   end
 
   def serializer

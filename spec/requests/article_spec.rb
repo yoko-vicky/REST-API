@@ -23,13 +23,27 @@ RSpec.describe ArticlesController do
       end
     end
 
-    it 'returns articles in the latest order' do
+    it 'returns articles in the proper order' do
       older_article = create(:article, created_at: 1.hour.ago)
       recent_article = create(:article)
 
       get '/articles'
       ids = json_data.map { |item| item[:id].to_i }
       expect(ids).to eq([recent_article.id, older_article.id])
+    end
+
+    it 'pagenates results' do
+      article1, article2, article3 = create_list(:article, 3)
+      get '/articles', params: { page: { number: 2, size: 1 } }
+      expect(json_data.length).to eq(1)
+      expect(json_data.first[:id]).to eq(article2)
+    end
+
+    it 'contains pagination links in the response' do
+      article1, article2, article3 = create_list(:article, 3)
+      get '/articles', params: { page: { number: 2, size: 1 } }
+      expect(json['links'].length).to eq(5)
+      expect(json['links'].keys).to contain_exactly('self', 'first', 'prev', 'next', 'last')
     end
   end
 end
